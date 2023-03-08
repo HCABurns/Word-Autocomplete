@@ -1,5 +1,5 @@
 # Word-Autocomplete
-This is a word autocomplete program created in Python that is implemented using the Trie data structure.
+This is a word autocomplete program created in Python that is implemented using a dictionary to imitate a Trie data structure.
 
 ## Future Additions:
 
