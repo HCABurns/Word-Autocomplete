@@ -6,4 +6,8 @@ if __name__ == "__main__":
     trie.insertWord("Done")
     trie.insertWord("Donna")
     trie.insertWord("Do")
-    print(trie.getTrie())
+    trie.insertWord("Dodo")
+    #print(trie.getTrie())
+
+    print(trie.findCandidates("don"))
+    print(trie.candidateWords)

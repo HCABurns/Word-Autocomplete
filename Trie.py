@@ -20,7 +20,6 @@ class Trie():
                                text.
         """
         self.trie = {}
-        self.candidateWords = []
 
     def getTrie(self):
         return self.trie
@@ -63,8 +62,7 @@ class Trie():
             trie=trie[char]
         return True
 
-
-    def findCandidates(self,word):
+    def findCandidates(self,word,candidateWords):
         """
         Function to find the candidate words proceeding the word.
         This function uses recursion and updates a private variable. 
@@ -79,11 +77,13 @@ class Trie():
         #Naviagte through the children until finding a "!"
         children = self.getChildren(trie)
         if "!" in children:
-            self.candidateWords.append(word)
+            candidateWords.append(word)
         for letter in children:
             if letter!="!":
-                self.findCandidates(word+letter)
-
+                self.findCandidates(word+letter,candidateWords)
+        return candidateWords
+                
+        
 
 def manualTesting():
     help(Trie)
@@ -97,8 +97,7 @@ def manualTesting():
     print(main.getDirectChildren("Ja"))
     testWord = "James"
     print(f'Is word "{testWord}" in the trie? {"Yes" if main.containsWord(testWord) else "No"}')
-    print(main.findCandidates("ja",[]))
-    print(main.candidateWords)
+    print(main.findCandidates("jame",[]))
     
 
 if __name__ == "__main__":
