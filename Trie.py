@@ -22,6 +22,13 @@ class Trie():
         self.trie = {}
 
     def getTrie(self):
+        """
+        This function will return the root of the trie.
+
+        Returns
+        ----------
+        dict - Dictionary pointing to the root of the trie.
+        """
         return self.trie
 
     def insertWord(self,word):
@@ -33,6 +40,10 @@ class Trie():
         ----------
         word : str
             This is the word that will be added to the trie.
+
+        Returns
+        ----------
+        None
         """
         #Create a new object that can be manipulated to insert a new word.
         trie = self.trie
@@ -43,6 +54,18 @@ class Trie():
         trie["!"] = True
 
     def getDirectChildren(self,word):
+        """
+        This function will return an array of letters, if any, of the next letters in the trie after the given word.
+
+        Parameters
+        ----------
+        word : str
+            This is the word that will be used to find the next proceeding letters.
+        
+        Returns
+        ----------
+        list - List of letters.
+        """
         trie = self.trie
         for char in word.lower():
             if trie.get(char,False) is not False:
@@ -52,9 +75,33 @@ class Trie():
         return list(trie.keys())
 
     def getChildren(self,trie):
+        """
+        This is used to return the dictionaries of the children of the trie given.
+
+        Parameters
+        ----------
+        trie : dict
+            This is the trie that the children will be found from.
+        
+        Returns
+        ----------
+        list - List of dictionaries.
+        """
         return list(trie.keys())
 
     def containsWord(self,word):
+        """
+        This is used to find if a word is present in the trie or not.
+
+        Parameters
+        ----------
+        word : str
+            This is the word that is being checked for in the trie.
+            
+        Returns
+        ----------
+        boolean - True or False (if it's in the trie or not).
+        """
         trie = self.trie
         for char in word.lower():
             if trie.get(char,False) == False:
@@ -65,13 +112,24 @@ class Trie():
     def findCandidates(self,word,candidateWords):
         """
         Function to find the candidate words proceeding the word.
-        This function uses recursion and updates a private variable. 
+        This function uses recursion and updates a private variable.
+
+        Parameters
+        ----------
+        word : str
+            This is the word that is being used to look for complete words.
+        candidateWords : list
+            This is a list of words that the given word is a prefix of.
+            
+        Returns
+        ----------
+        list - This is a list of words that the given word is a prefix of.
         """
         #Navigate to end of given word
         trie = self.trie
         for char in word.lower():
             if trie.get(char,False) == False:
-                return "No candidates have been found!"
+                return []
             trie=trie[char]
         
         #Naviagte through the children until finding a "!"
@@ -98,7 +156,7 @@ def manualTesting():
     testWord = "James"
     print(f'Is word "{testWord}" in the trie? {"Yes" if main.containsWord(testWord) else "No"}')
     print(main.findCandidates("jame",[]))
-    
+    print(main.getChildren(main.trie["j"]["a"]["m"]))    
 
 if __name__ == "__main__":
     main = Trie()
