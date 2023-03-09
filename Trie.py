@@ -11,6 +11,7 @@ class Trie():
 
         Methods
         ----------
+        buildTrie(words) - Builds a trie using an array of words.
         getTrie() - Returns the trie object. (Reference to the root) 
         insertWord(word) - Allows insrtion of words to the trie.
         getDirectChildren(word) - Returns array of letters that follow the given
@@ -20,6 +21,21 @@ class Trie():
                                text.
         """
         self.trie = {}
+
+    def buildTrie(self,words):
+        """
+        Builds a trie using the words provided.
+
+        Parameters
+        ----------
+        words : Array of strings to be added to the trie.
+
+        Return
+        ----------
+        None
+        """
+        for word in words:
+            self.insertWord(word)
 
     def getTrie(self):
         """
