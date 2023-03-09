@@ -129,7 +129,7 @@ class Trie():
         trie = self.trie
         for char in word.lower():
             if trie.get(char,False) == False:
-                return "No candidates have been found!"
+                return []
             trie=trie[char]
         
         #Naviagte through the children until finding a "!"
@@ -156,7 +156,7 @@ def manualTesting():
     testWord = "James"
     print(f'Is word "{testWord}" in the trie? {"Yes" if main.containsWord(testWord) else "No"}')
     print(main.findCandidates("jame",[]))
-    
+    print(main.getChildren(main.trie["j"]["a"]["m"]))    
 
 if __name__ == "__main__":
     main = Trie()
