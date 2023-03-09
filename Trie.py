@@ -20,6 +20,7 @@ class Trie():
                                text.
         """
         self.trie = {}
+        self.candidateWords = []
 
     def getTrie(self):
         return self.trie
@@ -51,6 +52,9 @@ class Trie():
                 return "Error: Word is not currently implemented!"
         return list(trie.keys())
 
+    def getChildren(self,trie):
+        return list(trie.keys())
+
     def containsWord(self,word):
         trie = self.trie
         for char in word.lower():
@@ -58,9 +62,27 @@ class Trie():
                 return False
             trie=trie[char]
         return True
-    
+
+
     def findCandidates(self,word):
-        pass
+        """
+        Function to find the candidate words proceeding the word.
+        This function uses recursion and updates a private variable. 
+        """
+        #Navigate to end of given word
+        trie = self.trie
+        for char in word.lower():
+            if trie.get(char,False) == False:
+                return "No candidates have been found!"
+            trie=trie[char]
+        
+        #Naviagte through the children until finding a "!"
+        children = self.getChildren(trie)
+        if "!" in children:
+            self.candidateWords.append(word)
+        for letter in children:
+            if letter!="!":
+                self.findCandidates(word+letter)
 
 
 def manualTesting():
@@ -69,12 +91,15 @@ def manualTesting():
     print(main.getTrie)
     print(main.insertWord("Jake"))
     print(main.insertWord("James"))
+    print(main.insertWord("Jam"))
     print(main.trie)
     print(*main.trie["j"]["a"])
     print(main.getDirectChildren("Ja"))
     testWord = "James"
     print(f'Is word "{testWord}" in the trie? {"Yes" if main.containsWord(testWord) else "No"}')
-
+    print(main.findCandidates("ja",[]))
+    print(main.candidateWords)
+    
 
 if __name__ == "__main__":
     main = Trie()
