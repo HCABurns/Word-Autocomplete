@@ -5,4 +5,5 @@ if __name__ == "__main__":
     trie.insertWord("Donkey")
     trie.insertWord("Done")
     trie.insertWord("Donna")
+    trie.insertWord("Do")
     print(trie.getTrie())
