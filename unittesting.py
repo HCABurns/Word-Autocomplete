@@ -1,4 +1,5 @@
 from Trie import Trie
+from dbController import dbController
 import unittest
 class TestMethods(unittest.TestCase):
     """
@@ -94,6 +95,30 @@ class TestMethods(unittest.TestCase):
         print("FindCandidates test finished")
 
 
+    def testGetWords(self):
+        """
+        Testing the getWords function in the dbController class.
+
+        *NOTE* Testing this fully is not possible due to the changing nature of the database.
+
+        Return
+        ---------
+        None
+        """
+        db = dbController()
+        self.assertEqual(db.getWords()[0:5],['James', 'Jake', 'Jam', 'Lorem', 'Lore'])
+        print("getWords test finished")
+        db.con.close()
+
+    
+    def testAddWord(self):
+        db = dbController()
+        self.assertEqual(db.addWord("Jake"),False)
+        self.assertEqual(db.addWord("James"),False)
+        self.assertEqual(db.addWord("Jam"),False)
+        print("addWord test finished")
+        db.con.close()
+    
 if __name__ == '__main__':
     unittest.main()
 
