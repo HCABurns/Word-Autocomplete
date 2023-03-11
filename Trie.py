@@ -88,6 +88,30 @@ class Trie():
             trie=trie[char]
         trie["!"] = True
 
+
+    def deleteWord(self,word):
+        """
+        This function will remove any word currently in the trie.
+
+        Parameters
+        ----------
+        word : str
+            This is the word that will be removed from the trie.
+        
+        Returns
+        ----------
+        boolean - True if the word has been removed and false if it hasn't.
+        """
+        trie = self.trie
+        if self.containsWord(word):
+            for char in word.lower():
+                trie=trie[char]
+            trie.pop("!")
+            return True
+        else:
+            return False
+
+
     def getDirectChildren(self,word):
         """
         This function will return an array of letters, if any, of the next letters in the trie after the given word.
@@ -142,7 +166,10 @@ class Trie():
             if trie.get(char,False) == False:
                 return False
             trie=trie[char]
-        return True
+        if trie.get("!",False) == False:
+            return False
+        else:
+            return True
 
     def findCandidates(self,word,candidateWords,maxDepth):
         """
@@ -195,6 +222,10 @@ def manualTesting():
     main.setMaxDepth(3)
     print(main.maxDepth)
     print(main.findCandidates("j",[],main.maxDepth))
+    print("Remove jam")
+    main.deleteWord("jam")
+    print(main.findCandidates("j",[],main.maxDepth))
+    
     #print(main.getChildren(main.trie["j"]["a"]["m"]))    
 
 if __name__ == "__main__":
