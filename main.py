@@ -14,11 +14,12 @@ def runSimulation(trie,db):
         print("2. Check if a word is in the trie or not.")
         print("3. Insert a new word into the trie.")
         print("4. Change amount of characters to find proceeding given word.")
-        print("5. To quit the program.")
+        print("5. Remove a word from the trie.")
+        print("6. To quit the program.")
         while True:
             try:
                 answer = int(input("Enter value: "))
-                if answer<=5 and answer>0:
+                if answer<=6 and answer>0:
                     break
             except Exception:
                 print("Invalid input!")
@@ -32,8 +33,7 @@ def runSimulation(trie,db):
                 for i,word in enumerate(wordsList,1):
                     print(f"{i}. {word}")
             else:
-                print("No words can be found in the trie!")
-            
+                print("No words can be found in the trie!") 
                 
         elif answer == 2:
             answer = input("Enter word you wish to search for: ")
@@ -62,7 +62,16 @@ def runSimulation(trie,db):
                     break
                 except:
                     print("Invalid input, please enter a value!")
+
         elif answer == 5:
+            answer = input("Enter word you wish to remove from the trie: ")
+            if db.deleteWord(answer):
+                trie.deleteWord(answer)
+                print(f"{answer} has been removed from the trie.")
+            else:
+                print(f"{answer} has NOT been removed from the trie.")
+        
+        elif answer == 6:
             sys.exit()
             
     
