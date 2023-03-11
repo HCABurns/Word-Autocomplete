@@ -15,7 +15,8 @@ class Trie():
         setMaxDepth(value) - Set the max depth for searching.
         buildTrie(words) - Builds a trie using an array of words.
         getTrie() - Returns the trie object. (Reference to the root) 
-        insertWord(word) - Allows insrtion of words to the trie.
+        insertWord(word) - Allows insertion of a word to the trie.
+        deleteWord(word) - Allows deletion of a word to the trie.
         getDirectChildren(word) - Returns array of letters that follow the given
                                   word in the trie.
         containsWord(word) - Returns boolean regarding if that word is in the trie or not.
@@ -23,7 +24,7 @@ class Trie():
                                text.
         """
         self.trie = {}
-        self.maxDepth = -1 #######
+        self.maxDepth = -1
 
     def setMaxDepth(self,value):
         """
@@ -88,6 +89,30 @@ class Trie():
             trie=trie[char]
         trie["!"] = True
 
+
+    def deleteWord(self,word):
+        """
+        This function will remove any word currently in the trie.
+
+        Parameters
+        ----------
+        word : str
+            This is the word that will be removed from the trie.
+        
+        Returns
+        ----------
+        boolean - True if the word has been removed and false if it hasn't.
+        """
+        trie = self.trie
+        if self.containsWord(word):
+            for char in word.lower():
+                trie=trie[char]
+            trie.pop("!")
+            return True
+        else:
+            return False
+
+
     def getDirectChildren(self,word):
         """
         This function will return an array of letters, if any, of the next letters in the trie after the given word.
@@ -142,7 +167,10 @@ class Trie():
             if trie.get(char,False) == False:
                 return False
             trie=trie[char]
-        return True
+        if trie.get("!",False) == False:
+            return False
+        else:
+            return True
 
     def findCandidates(self,word,candidateWords,maxDepth):
         """
@@ -177,8 +205,7 @@ class Trie():
             if letter!="!" and (md != 0):
                 self.findCandidates(word+letter,candidateWords,md-1)
         return candidateWords
-                
-        
+                   
 
 def manualTesting():
     help(Trie)
@@ -195,7 +222,10 @@ def manualTesting():
     main.setMaxDepth(3)
     print(main.maxDepth)
     print(main.findCandidates("j",[],main.maxDepth))
-    #print(main.getChildren(main.trie["j"]["a"]["m"]))    
+    print("Remove jam")
+    main.deleteWord("jam")
+    print(main.findCandidates("j",[],main.maxDepth))
+    print(main.getChildren(main.trie["j"]["a"]["m"]))    
 
 if __name__ == "__main__":
     main = Trie()

@@ -1,11 +1,20 @@
 from Trie import Trie
 from dbController import dbController
 import sys
-def generateTrie(trie):
-    
-    trie.buildTree(words)
 
 def runSimulation(trie,db):
+    """
+    This function acts as a interface for the user to interact with the program.
+
+    Parameters
+    -------------
+    trie - Trie object
+    db - dbController object
+
+    Return
+    -------------
+    None
+    """
     print("Welcome to the word autocompleter!")
     while True:
         print("")
@@ -14,11 +23,12 @@ def runSimulation(trie,db):
         print("2. Check if a word is in the trie or not.")
         print("3. Insert a new word into the trie.")
         print("4. Change amount of characters to find proceeding given word.")
-        print("5. To quit the program.")
+        print("5. Remove a word from the trie.")
+        print("6. To quit the program.")
         while True:
             try:
                 answer = int(input("Enter value: "))
-                if answer<=5 and answer>0:
+                if answer<=6 and answer>0:
                     break
             except Exception:
                 print("Invalid input!")
@@ -30,10 +40,9 @@ def runSimulation(trie,db):
             if len(wordsList) != 0:
                 print("Words that follow the given word are: ")
                 for i,word in enumerate(wordsList,1):
-                    print(f"{i}. {word}")
+                    print(f"{i}. {word.title()}")
             else:
-                print("No words can be found in the trie!")
-            
+                print("No words can be found in the trie!") 
                 
         elif answer == 2:
             answer = input("Enter word you wish to search for: ")
@@ -62,9 +71,17 @@ def runSimulation(trie,db):
                     break
                 except:
                     print("Invalid input, please enter a value!")
+
         elif answer == 5:
-            sys.exit()
-            
+            answer = input("Enter word you wish to remove from the trie: ")
+            if db.deleteWord(answer):
+                trie.deleteWord(answer)
+                print(f"{answer} has been removed from the trie.")
+            else:
+                print(f"{answer} has NOT been removed from the trie.")
+        
+        elif answer == 6:
+            sys.exit()     
     
 
 if __name__ == "__main__":
@@ -73,17 +90,4 @@ if __name__ == "__main__":
     words = db.getWords()
     trie.buildTrie(words)
     runSimulation(trie,db)
-    
-    
-    #print(words)
-    
-    #words = ["deer", "desk", "donkey", "dart", "deep", "dance", "duck",
-    #         "dip", "dab", "den", "dad", "dent", "dock", "dark", "dust",
-    #         "done","donna","do","dodo", "lead", "lord","lorem","lore","lores"]
-
-    #trie.buildTrie(words)
-    #word="do"
-    #print(f"Autocomplete words for {word} are: {trie.findCandidates(word,[])}")
-    #word="lo"
-    #print(f"Autocomplete words for {word} are: {trie.findCandidates(word,[])}")
 

@@ -7,7 +7,10 @@ class dbController():
 
     Methods
     ----------
-    getNames() - Retrieves all the words in the database and returns as a list.
+    getWords() - Retrieves all the words in the database and returns as a list.
+    addWord(word) - Adds a word to the database.
+    deleteWord(word) - Removes a word from the database.
+    containsWord(word) - Check if a word is in the database or not.
     """
     
     def __init__(self):
@@ -41,7 +44,7 @@ class dbController():
         Parameters
         -------------
         word : string
-            - This is the word that will be added the the database.
+            - This is the word that will be added to the database.
 
         Return
         -------------
@@ -59,10 +62,50 @@ class dbController():
             return False
         self.con.commit()
         return True
-        
 
-if __name__ == "__main__":
-    db = dbController()
+
+    def deleteWord(self,word):
+        """
+        This function allows for removing words from the database.
+
+        Parameters
+        -------------
+        word : string
+            - This is the word that will be removed from the database.
+
+        Return
+        -------------
+        boolean - Returns true if the word has been removed and false if it has not been removed.
+        """
+        if self.containsWord(word):
+            try:
+                r = self.cur.execute(f'DELETE FROM words WHERE word="{word}"')
+                self.con.commit()
+                return True
+            except sqlite3.IntegrityError:
+                return False
+        return False
+
+
+    def containsWord(self,word):
+        """
+        This function will check if a word is in the database.
+
+        Return
+        ---------
+        boolean - True or false for if the word is in the database or not.
+        """
+        command = "SELECT word FROM Words WHERE word='{}'".format(word)
+        rows = self.cur.execute(command)
+        for row in rows:
+            return True
+        return False
+
+
+def manualTesting():
+    """
+    Test harness
+    """
     names = db.getWords()
     print(names)
     word = "Jack"
@@ -74,7 +117,17 @@ if __name__ == "__main__":
     word = "x-ray"
     added = db.addWord(word)
     print(f"Has {word} successfully been added to the db? {'Yes' if added else 'No'}")
-    word = "that's"
+    word = "added"
     added = db.addWord(word)
     print(f"Has {word} successfully been added to the db? {'Yes' if added else 'No'}")
+    removed = db.deleteWord(word)
+    print(f"Has {word} successfully been removed from the db? {'Yes' if removed else 'No'}")
+    word = "x-ray"
+    removed = db.deleteWord(word)
+    print(f"Has {word} successfully been removed from the db? {'Yes' if removed else 'No'}")
+        
+
+if __name__ == "__main__":
+    db = dbController()
+    manualTesting()
     db.con.close()
