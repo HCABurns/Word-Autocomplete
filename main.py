@@ -10,7 +10,7 @@ def runSimulation(trie,db):
     while True:
         print("")
         print("To interact with the program simply send a message with the corresponding number of the activity you wish to start.")
-        print("1. Search the trie for words proceeding a given word.")
+        print(f"1. Search the trie for words proceeding a given word. MaxDepth currently {'not set.' if trie.maxDepth == -1 else 'set at '+str(trie.maxDepth)+ ' characters.'}")
         print("2. Check if a word is in the trie or not.")
         print("3. Insert a new word into the trie.")
         print("4. Change amount of characters to find proceeding given word.")
@@ -26,9 +26,8 @@ def runSimulation(trie,db):
         if answer == 1:
             answer = input("Enter word you wish to use: ")
             words = []
-            #words = 
             print("Words that follow the given word are: ")
-            for i,word in enumerate(sorted(trie.findCandidates(answer,words)),1):
+            for i,word in enumerate(sorted(trie.findCandidates(answer,words,trie.maxDepth)),1):
                 print(f"{i}. {word}")
                 
         if answer == 2:
@@ -49,7 +48,15 @@ def runSimulation(trie,db):
                 print(f"{answer} is already in the trie!")
             
         if answer == 4:
-            pass
+            while True:
+                try:
+                    print("*Value of -1 means there is no limit.*")
+                    answer = int(input("Enter the value you wish to use: "))
+                    trie.setMaxDepth(answer)
+                    print()
+                    break
+                except:
+                    print("Invalid input, please enter a value!")
         if answer == 5:
             sys.exit()
             
