@@ -30,12 +30,12 @@ def runSimulation(trie,db):
             for i,word in enumerate(sorted(trie.findCandidates(answer,words,trie.maxDepth)),1):
                 print(f"{i}. {word}")
                 
-        if answer == 2:
+        elif answer == 2:
             answer = input("Enter word you wish to search for: ")
             result = trie.containsWord(answer)
             print(f"The word {answer} is {'NOT in'if result == False else 'in'} the trie.")
 
-        if answer == 3:
+        elif answer == 3:
             answer = input("Enter word you wish to enter into the trie: ")
             if trie.containsWord(answer) == False:
                 result = db.addWord(answer)
@@ -47,7 +47,7 @@ def runSimulation(trie,db):
             else:
                 print(f"{answer} is already in the trie!")
             
-        if answer == 4:
+        elif answer == 4:
             while True:
                 try:
                     print("*Value of -1 means there is no limit.*")
@@ -57,7 +57,7 @@ def runSimulation(trie,db):
                     break
                 except:
                     print("Invalid input, please enter a value!")
-        if answer == 5:
+        elif answer == 5:
             sys.exit()
             
     
@@ -70,15 +70,15 @@ if __name__ == "__main__":
     runSimulation(trie,db)
     
     
-    print(words)
+    #print(words)
     
     #words = ["deer", "desk", "donkey", "dart", "deep", "dance", "duck",
     #         "dip", "dab", "den", "dad", "dent", "dock", "dark", "dust",
     #         "done","donna","do","dodo", "lead", "lord","lorem","lore","lores"]
 
-    trie.buildTrie(words)
-    word="do"
-    print(f"Autocomplete words for {word} are: {trie.findCandidates(word,[])}")
-    word="lo"
-    print(f"Autocomplete words for {word} are: {trie.findCandidates(word,[])}")
+    #trie.buildTrie(words)
+    #word="do"
+    #print(f"Autocomplete words for {word} are: {trie.findCandidates(word,[])}")
+    #word="lo"
+    #print(f"Autocomplete words for {word} are: {trie.findCandidates(word,[])}")
 
