@@ -13,7 +13,6 @@ The trie is implemented using a dictionary. A dictionary, also referred to as a 
 
 ## Future Additions:
 
-  * Addition of a *strength* feature that dictates the max amount of additional characters to search for words.
   * Adding a popularity mesaure to each word in the database that can be used to order the list of return candidate words. (For the purpose of updating the database and making the returned list more useful)
 
 
