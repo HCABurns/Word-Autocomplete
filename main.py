@@ -1,11 +1,20 @@
 from Trie import Trie
 from dbController import dbController
 import sys
-def generateTrie(trie):
-    
-    trie.buildTree(words)
 
 def runSimulation(trie,db):
+    """
+    This function acts as a interface for the user to interact with the program.
+
+    Parameters
+    -------------
+    trie - Trie object
+    db - dbController object
+
+    Return
+    -------------
+    None
+    """
     print("Welcome to the word autocompleter!")
     while True:
         print("")
@@ -72,8 +81,7 @@ def runSimulation(trie,db):
                 print(f"{answer} has NOT been removed from the trie.")
         
         elif answer == 6:
-            sys.exit()
-            
+            sys.exit()     
     
 
 if __name__ == "__main__":
@@ -82,17 +90,4 @@ if __name__ == "__main__":
     words = db.getWords()
     trie.buildTrie(words)
     runSimulation(trie,db)
-    
-    
-    #print(words)
-    
-    #words = ["deer", "desk", "donkey", "dart", "deep", "dance", "duck",
-    #         "dip", "dab", "den", "dad", "dent", "dock", "dark", "dust",
-    #         "done","donna","do","dodo", "lead", "lord","lorem","lore","lores"]
-
-    #trie.buildTrie(words)
-    #word="do"
-    #print(f"Autocomplete words for {word} are: {trie.findCandidates(word,[])}")
-    #word="lo"
-    #print(f"Autocomplete words for {word} are: {trie.findCandidates(word,[])}")
 

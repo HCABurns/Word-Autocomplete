@@ -7,7 +7,10 @@ class dbController():
 
     Methods
     ----------
-    getNames() - Retrieves all the words in the database and returns as a list.
+    getWords() - Retrieves all the words in the database and returns as a list.
+    addWord(word) - Adds a word to the database.
+    deleteWord(word) - Removes a word from the database.
+    containsWord(word) - Check if a word is in the database or not.
     """
     
     def __init__(self):
@@ -97,10 +100,12 @@ class dbController():
         for row in rows:
             return True
         return False
-        
 
-if __name__ == "__main__":
-    db = dbController()
+
+def manualTesting():
+    """
+    Test harness
+    """
     names = db.getWords()
     print(names)
     word = "Jack"
@@ -115,12 +120,14 @@ if __name__ == "__main__":
     word = "added"
     added = db.addWord(word)
     print(f"Has {word} successfully been added to the db? {'Yes' if added else 'No'}")
-
     removed = db.deleteWord(word)
     print(f"Has {word} successfully been removed from the db? {'Yes' if removed else 'No'}")
-
     word = "x-ray"
     removed = db.deleteWord(word)
     print(f"Has {word} successfully been removed from the db? {'Yes' if removed else 'No'}")
-    
+        
+
+if __name__ == "__main__":
+    db = dbController()
+    manualTesting()
     db.con.close()

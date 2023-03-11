@@ -15,7 +15,8 @@ class Trie():
         setMaxDepth(value) - Set the max depth for searching.
         buildTrie(words) - Builds a trie using an array of words.
         getTrie() - Returns the trie object. (Reference to the root) 
-        insertWord(word) - Allows insrtion of words to the trie.
+        insertWord(word) - Allows insertion of a word to the trie.
+        deleteWord(word) - Allows deletion of a word to the trie.
         getDirectChildren(word) - Returns array of letters that follow the given
                                   word in the trie.
         containsWord(word) - Returns boolean regarding if that word is in the trie or not.
@@ -23,7 +24,7 @@ class Trie():
                                text.
         """
         self.trie = {}
-        self.maxDepth = -1 #######
+        self.maxDepth = -1
 
     def setMaxDepth(self,value):
         """
@@ -204,8 +205,7 @@ class Trie():
             if letter!="!" and (md != 0):
                 self.findCandidates(word+letter,candidateWords,md-1)
         return candidateWords
-                
-        
+                   
 
 def manualTesting():
     help(Trie)
@@ -225,8 +225,7 @@ def manualTesting():
     print("Remove jam")
     main.deleteWord("jam")
     print(main.findCandidates("j",[],main.maxDepth))
-    
-    #print(main.getChildren(main.trie["j"]["a"]["m"]))    
+    print(main.getChildren(main.trie["j"]["a"]["m"]))    
 
 if __name__ == "__main__":
     main = Trie()
