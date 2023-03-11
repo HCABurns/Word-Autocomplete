@@ -31,7 +31,7 @@ def runSimulation(trie,db):
             if len(wordsList) != 0:
                 print("Words that follow the given word are: ")
                 for i,word in enumerate(wordsList,1):
-                    print(f"{i}. {word}")
+                    print(f"{i}. {word.title()}")
             else:
                 print("No words can be found in the trie!") 
                 
