@@ -26,9 +26,14 @@ def runSimulation(trie,db):
         if answer == 1:
             answer = input("Enter word you wish to use: ")
             words = []
-            print("Words that follow the given word are: ")
-            for i,word in enumerate(sorted(trie.findCandidates(answer,words,trie.maxDepth)),1):
-                print(f"{i}. {word}")
+            wordsList = sorted(trie.findCandidates(answer,words,trie.maxDepth))
+            if len(wordsList) != 0:
+                print("Words that follow the given word are: ")
+                for i,word in enumerate(wordsList,1):
+                    print(f"{i}. {word}")
+            else:
+                print("No words can be found in the trie!")
+            
                 
         elif answer == 2:
             answer = input("Enter word you wish to search for: ")
