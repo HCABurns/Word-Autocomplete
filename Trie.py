@@ -8,9 +8,11 @@ class Trie():
         Parameters
         ----------
         trie : dict of str: dict
-
+        maxDepth : int
+        
         Methods
         ----------
+        setMaxDepth(value) - Set the max depth for searching.
         buildTrie(words) - Builds a trie using an array of words.
         getTrie() - Returns the trie object. (Reference to the root) 
         insertWord(word) - Allows insrtion of words to the trie.
@@ -21,7 +23,24 @@ class Trie():
                                text.
         """
         self.trie = {}
+        self.maxDepth = -1 #######
 
+    def setMaxDepth(self,value):
+        """
+        This function set the maxDepth to search the trie for candidate words.
+
+        Parameters
+        ------------
+        value : int
+            Value to set the maxDepth to
+
+        Return
+        ------------
+        None
+        """
+        if isinstance(value,int):
+            self.maxDepth = value
+    
     def buildTrie(self,words):
         """
         Builds a trie using the words provided.
@@ -125,7 +144,7 @@ class Trie():
             trie=trie[char]
         return True
 
-    def findCandidates(self,word,candidateWords):
+    def findCandidates(self,word,candidateWords,maxDepth):
         """
         Function to find the candidate words proceeding the word.
         This function uses recursion and updates a private variable.
@@ -136,13 +155,15 @@ class Trie():
             This is the word that is being used to look for complete words.
         candidateWords : list
             This is a list of words that the given word is a prefix of.
-            
+        maxDepth : int
+            This is the maximum amount of charaters extra that a word can be found. (e.g J,[],2 -> Jam but not Jame)
         Returns
         ----------
         list - This is a list of words that the given word is a prefix of.
         """
         #Navigate to end of given word
         trie = self.trie
+        md = maxDepth
         for char in word.lower():
             if trie.get(char,False) == False:
                 return []
@@ -153,8 +174,8 @@ class Trie():
         if "!" in children:
             candidateWords.append(word)
         for letter in children:
-            if letter!="!":
-                self.findCandidates(word+letter,candidateWords)
+            if letter!="!" and (md != 0):
+                self.findCandidates(word+letter,candidateWords,md-1)
         return candidateWords
                 
         
@@ -171,8 +192,10 @@ def manualTesting():
     print(main.getDirectChildren("Ja"))
     testWord = "James"
     print(f'Is word "{testWord}" in the trie? {"Yes" if main.containsWord(testWord) else "No"}')
-    print(main.findCandidates("jame",[]))
-    print(main.getChildren(main.trie["j"]["a"]["m"]))    
+    main.setMaxDepth(3)
+    print(main.maxDepth)
+    print(main.findCandidates("j",[],main.maxDepth))
+    #print(main.getChildren(main.trie["j"]["a"]["m"]))    
 
 if __name__ == "__main__":
     main = Trie()

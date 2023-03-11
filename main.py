@@ -10,7 +10,7 @@ def runSimulation(trie,db):
     while True:
         print("")
         print("To interact with the program simply send a message with the corresponding number of the activity you wish to start.")
-        print("1. Search the trie for words proceeding a given word.")
+        print(f"1. Search the trie for words proceeding a given word. MaxDepth currently {'not set.' if trie.maxDepth == -1 else 'set at '+str(trie.maxDepth)+ ' characters.'}")
         print("2. Check if a word is in the trie or not.")
         print("3. Insert a new word into the trie.")
         print("4. Change amount of characters to find proceeding given word.")
@@ -26,17 +26,21 @@ def runSimulation(trie,db):
         if answer == 1:
             answer = input("Enter word you wish to use: ")
             words = []
-            #words = 
-            print("Words that follow the given word are: ")
-            for i,word in enumerate(sorted(trie.findCandidates(answer,words)),1):
-                print(f"{i}. {word}")
+            wordsList = sorted(trie.findCandidates(answer,words,trie.maxDepth))
+            if len(wordsList) != 0:
+                print("Words that follow the given word are: ")
+                for i,word in enumerate(wordsList,1):
+                    print(f"{i}. {word}")
+            else:
+                print("No words can be found in the trie!")
+            
                 
-        if answer == 2:
+        elif answer == 2:
             answer = input("Enter word you wish to search for: ")
             result = trie.containsWord(answer)
             print(f"The word {answer} is {'NOT in'if result == False else 'in'} the trie.")
 
-        if answer == 3:
+        elif answer == 3:
             answer = input("Enter word you wish to enter into the trie: ")
             if trie.containsWord(answer) == False:
                 result = db.addWord(answer)
@@ -48,9 +52,17 @@ def runSimulation(trie,db):
             else:
                 print(f"{answer} is already in the trie!")
             
-        if answer == 4:
-            pass
-        if answer == 5:
+        elif answer == 4:
+            while True:
+                try:
+                    print("*Value of -1 means there is no limit.*")
+                    answer = int(input("Enter the value you wish to use: "))
+                    trie.setMaxDepth(answer)
+                    print()
+                    break
+                except:
+                    print("Invalid input, please enter a value!")
+        elif answer == 5:
             sys.exit()
             
     
@@ -63,15 +75,15 @@ if __name__ == "__main__":
     runSimulation(trie,db)
     
     
-    print(words)
+    #print(words)
     
     #words = ["deer", "desk", "donkey", "dart", "deep", "dance", "duck",
     #         "dip", "dab", "den", "dad", "dent", "dock", "dark", "dust",
     #         "done","donna","do","dodo", "lead", "lord","lorem","lore","lores"]
 
-    trie.buildTrie(words)
-    word="do"
-    print(f"Autocomplete words for {word} are: {trie.findCandidates(word,[])}")
-    word="lo"
-    print(f"Autocomplete words for {word} are: {trie.findCandidates(word,[])}")
+    #trie.buildTrie(words)
+    #word="do"
+    #print(f"Autocomplete words for {word} are: {trie.findCandidates(word,[])}")
+    #word="lo"
+    #print(f"Autocomplete words for {word} are: {trie.findCandidates(word,[])}")
 
