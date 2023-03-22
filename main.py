@@ -1,5 +1,5 @@
 from Trie import Trie
-from dbController import dbController
+from dbController import DBController
 import sys
 
 def runSimulation(trie,db):
@@ -86,7 +86,7 @@ def runSimulation(trie,db):
 
 if __name__ == "__main__":
     trie = Trie()
-    db = dbController()
+    db = DBController()
     words = db.getWords()
     trie.buildTrie(words)
     runSimulation(trie,db)
