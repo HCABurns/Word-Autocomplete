@@ -1,7 +1,7 @@
 #Import to allow for accessing and updating the database.
 import sqlite3
 
-class dbController():
+class DBController():
     """
     This is the class that will deal with all the retrieval and updating of the database.
 
@@ -128,6 +128,6 @@ def manualTesting():
         
 
 if __name__ == "__main__":
-    db = dbController()
+    db = DBController()
     manualTesting()
     db.con.close()
