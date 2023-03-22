@@ -1,5 +1,5 @@
 from Trie import Trie
-from dbController import DBController
+from DBController import DBController
 import sys
 
 def runSimulation(trie,db):
